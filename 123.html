@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>MEB Fizik Kitabı</title>
+
+<style>
+body {
+    margin: 0;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* A4 oran (1 : 1.414) */
+.book {
+    width: 65vh;
+    height: 92vh;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* JPG BOYUT DÜZELTME */
+.book img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;   /* 🔥 ÖNEMLİ */
+}
+
+/* SAĞ - SOL BUTON */
+.navBtn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.9);
+}
+
+.navBtn:hover {
+    background: white;
+}
+
+/* ALT KONTROLLER */
+.controls {
+    position: absolute;
+    bottom: -65px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.controls button {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.controls input {
+    width: 80px;
+    text-align: center;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <button class="navBtn" onclick="geri()">‹</button>
+
+    <div class="book">
+        <img id="pageImg">
+
+        <div class="controls">
+            <button onclick="azalt()">−</button>
+            <input type="number" id="pageInput" min="1" max="272" onchange="git()">
+            <button onclick="arttir()">+</button>
+        </div>
+    </div>
+
+    <button class="navBtn" onclick="ileri()">›</button>
+
+</div>
+
+<script>
+let sayfa = 1;
+const max = 272;
+
+function yukle() {
+    document.getElementById("pageImg").src =
+        "https://karnehesaplama.com/wp-content/uploads/2024/10/9-sinif-meb-yayinlari-fizik-ders-kitabi-sayfa-"
+        + sayfa + ".jpg";
+
+    document.getElementById("pageInput").value = sayfa;
+}
+
+function ileri() {
+    if (sayfa < max) {
+        sayfa++;
+        yukle();
+    }
+}
+
+function geri() {
+    if (sayfa > 1) {
+        sayfa--;
+        yukle();
+    }
+}
+
+function arttir() { ileri(); }
+function azalt() { geri(); }
+
+function git() {
+    let g = parseInt(document.getElementById("pageInput").value);
+    if (g >= 1 && g <= max) {
+        sayfa = g;
+        yukle();
+    }
+}
+
+yukle();
+</script>
+
+</body>
+</html>
